@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAGUARO IRONLINE — PHX PERFORMANCE™</title>
+    <meta name="description" content="Performance Consulting. Phoenix, AZ.">
+    <style>
+        /* --- 0.0 ARCHITECTURE --- */
+        :root {
+            --carbon: #050505;
+            --concrete: #1f1f1f;
+            --steel: #333333;
+            --smoke: #888888;
+            --vapor: #E0E0E0;
+            --signal: #FFFFFF;
+            
+            --f-sans: 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+            --f-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
+            
+            --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+            --pad: clamp(1.25rem, 5vw, 6rem);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        ::selection { background: var(--signal); color: var(--carbon); }
+
+        html { 
+            background-color: var(--carbon); 
+            color: var(--vapor); 
+            font-size: 16px; 
+            scroll-behavior: smooth;
+        }
+
+        body { 
+            font-family: var(--f-sans); 
+            -webkit-font-smoothing: antialiased; 
+            line-height: 1.2;
+            overflow-x: hidden;
+        }
+
+        /* --- 1.0 TYPOGRAPHY SYSTEM --- */
+        h1, h2, h3, h4 { font-weight: 400; letter-spacing: -0.03em; color: var(--signal); }
+        
+        .t-mega {
+            font-size: clamp(4rem, 16vw, 14rem);
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            font-weight: 500;
+            margin-left: -0.06em;
+            text-transform: uppercase;
+        }
+
+        .t-headline {
+            font-size: clamp(1.75rem, 4vw, 3.5rem);
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .t-body {
+            font-size: clamp(1rem, 1.1vw, 1.15rem);
+            line-height: 1.6;
+            color: var(--smoke);
+            max-width: 38ch;
+            font-weight: 300; /* Lighter body text */
+        }
+
+        .t-label {
+            font-family: var(--f-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--smoke);
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        .t-num { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+
+        /* --- 2.0 LAYOUT UTILS --- */
+        .wrapper { width: 100%; padding: 0 var(--pad); }
+        .row { display: flex; flex-wrap: wrap; }
+        .col { flex: 1; min-width: 300px; }
+        .border-top { border-top: 1px solid var(--concrete); }
+        .border-bot { border-bottom: 1px solid var(--concrete); }
+        
+        .spacer-10 { height: 10vh; }
+        .spacer-20 { height: 20vh; }
+
+        /* --- 3.0 UI ELEMENTS --- */
+        .btn-minimal {
+            display: inline-block;
+            font-family: var(--f-mono);
+            font-size: 0.75rem;
+            color: var(--signal);
+            text-decoration: none;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--smoke);
+            padding-bottom: 0.2rem;
+            transition: all 0.4s var(--ease-luxury);
+            cursor: pointer;
+        }
+        .btn-minimal:hover { border-color: var(--signal); color: var(--signal); padding-right: 1rem; }
+
+        .btn-solid {
+            background: var(--signal);
+            color: var(--carbon);
+            padding: 1.2rem 2.5rem;
+            font-size: 0.9rem;
+            font-weight: 500; /* Lighter weight */
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 200px;
+            transition: transform 0.3s var(--ease-luxury);
+            border: none;
+            cursor: pointer;
+        }
+        .btn-solid:hover { transform: translateY(-2px); }
+
+        /* --- 4.0 HEADER --- */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 1.5rem var(--pad);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+            mix-blend-mode: exclusion;
+            background: rgba(5,5,5,0.01); 
+            backdrop-filter: blur(2px); 
+        }
+        
+        .brand { 
+            font-size: 0.9rem; font-weight: 700; letter-spacing: -0.02em; 
+            text-transform: uppercase; text-decoration: none; color: white;
+            white-space: nowrap;
+        }
+        
+        .nav-list { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-list a { 
+            font-family: var(--f-mono); font-size: 0.75rem; color: white; 
+            text-decoration: none; text-transform: uppercase; 
+            opacity: 0.6; transition: opacity 0.3s;
+        }
+        .nav-list a:hover { opacity: 1; }
+
+        /* --- 5.0 HERO --- */
+        .hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column; 
+            justify-content: flex-start;
+            padding-top: 22vh;
+            padding-bottom: 6rem;
+            position: relative;
+        }
+        
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: -1; opacity: 1;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        .hero-data {
+            position: absolute; top: 22vh; right: var(--pad);
+            text-align: right; font-family: var(--f-mono); font-size: 0.7rem; color: var(--smoke);
+            display: block; line-height: 1.4;
+        }
+
+        /* --- 6.0 SECTIONS --- */
+        .grid-stats {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--concrete);
+        }
+        .stat-box {
+            padding: 5rem var(--pad);
+            border-right: 1px solid var(--concrete);
+        }
+        .stat-box:last-child { border-right: none; }
+
+        .timeline-row {
+            display: grid; grid-template-columns: 0.5fr 1fr;
+            padding: 5rem 0;
+            border-bottom: 1px solid var(--concrete);
+            align-items: flex-start;
+        }
+        .step-index { font-family: var(--f-mono); color: var(--smoke); margin-bottom: 1rem; display: block; }
+
+        .pricing-card {
+            padding: 5rem var(--pad);
+            border-right: 1px solid var(--concrete);
+            display: flex; flex-direction: column; justify-content: space-between;
+            min-height: 550px;
+            transition: background 0.3s;
+        }
+        .pricing-card:hover { background: var(--concrete); }
+        .pricing-card ul { list-style: none; margin: 3rem 0; }
+        .pricing-card li { 
+            font-family: var(--f-mono); font-size: 0.8rem; color: var(--smoke); 
+            margin-bottom: 0.75rem; padding-left: 1.25rem; position: relative; 
+        }
+        .pricing-card li::before { 
+            content: '+'; position: absolute; left: 0; color: var(--signal); font-weight: 700;
+        }
+
+        /* --- 7.0 FORM (REFINED) --- */
+        .input-line {
+            width: 100%; background: transparent; border: none;
+            border-bottom: 1px solid var(--concrete);
+            color: var(--signal); 
+            font-size: clamp(1.5rem, 3vw, 2.5rem); 
+            padding: 1.5rem 0;
+            font-family: var(--f-sans); 
+            font-weight: 200; /* Ultra Light */
+            margin-bottom: 3rem; 
+            outline: none; 
+            transition: border-color 0.3s;
+            border-radius: 0; 
+        }
+        .input-line:focus { border-color: var(--signal); }
+        .input-line::placeholder { 
+            color: var(--smoke); 
+            opacity: 0.5; /* Ghosted */
+            font-weight: 200;
+        }
+
+        /* --- 8.0 MOBILE UI --- */
+        .mobile-bar { display: none; }
+
+        @media (max-width: 900px) {
+            .t-mega { font-size: 15vw; margin-left: 0; }
+            .grid-stats { grid-template-columns: 1fr; }
+            .stat-box { border-right: none; border-bottom: 1px solid var(--concrete); padding: 3rem var(--pad); }
+            .timeline-row { grid-template-columns: 1fr; gap: 1rem; padding: 4rem 0; }
+            .pricing-card { border-right: none; border-bottom: 1px solid var(--concrete); min-height: auto; padding: 4rem var(--pad); }
+            
+            .hero { padding-top: 25vh; }
+            .hero-data { display: none; }
+
+            header { 
+                background: rgba(5,5,5,0.8); 
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid var(--concrete);
+                padding: 1rem var(--pad);
+            }
+            .nav-list { 
+                gap: 1.5rem; 
+                overflow-x: auto; 
+                padding-right: 1rem;
+                -webkit-overflow-scrolling: touch; 
+                scrollbar-width: none; 
+            }
+            .nav-list::-webkit-scrollbar { display: none; }
+            .nav-list a { white-space: nowrap; font-size: 0.7rem; }
+            .brand { margin-right: 2rem; }
+
+            .mobile-bar {
+                display: flex;
+                position: fixed; bottom: 0; left: 0; width: 100%;
+                background: var(--carbon);
+                border-top: 1px solid var(--concrete);
+                padding: 1rem var(--pad);
+                z-index: 1001;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .mobile-bar span { font-family: var(--f-mono); font-size: 0.7rem; color: var(--smoke); }
+            .mobile-bar .btn-action {
+                background: var(--signal); color: var(--carbon);
+                padding: 0.75rem 1.5rem; font-size: 0.8rem; font-weight: 700;
+                text-decoration: none; text-transform: uppercase;
+            }
+            
+            footer { padding-bottom: 6rem; }
+        }
+
+        /* --- 9.0 ANIMATION --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1.2s var(--ease-luxury); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="brand">Saguaro Ironline</a>
+        <ul class="nav-list">
+            <li><a href="#stats">Output</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#roster">Roster</a></li>
+        </ul>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero wrapper">
+        <div class="hero-bg"></div>
+        
+        <div class="hero-data reveal">
+            COORD: 33.5° N, 112.0° W<br>
+            GRID: PHX-01<br>
+            STATUS: ACTIVE
+        </div>
+
+        <div style="position: relative; overflow: hidden;">
+            <span class="t-label reveal">Phoenix, AZ • Performance Consulting</span>
+            <h1 class="t-mega reveal" style="transition-delay: 0.1s;">
+                Human<br>Metric<br>Systems
+            </h1>
+        </div>
+        
+        <div class="row reveal" style="margin-top: 6rem; justify-content: space-between; align-items: flex-end; transition-delay: 0.2s;">
+            <p class="t-body">
+                We remove the guesswork from biological adaptation. 
+                A precision approach to hypertrophy and composition for the uncompromising.
+            </p>
+            <a href="#contact" class="btn-minimal" style="margin-bottom: 5px;">Initiate Audit &rarr;</a>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section id="stats" class="grid-stats border-top">
+        <div class="stat-box">
+            <span class="t-label">Average Output Increase</span>
+            <div class="t-headline t-num">42%</div>
+            <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--smoke); line-height: 1.5;">Year-over-year compound strength gains across Tier 1 clientele.</p>
+        </div>
+        <div class="stat-box">
+            <span class="t-label">Adherence Rate</span>
+            <div class="t-headline t-num">98%</div>
+            <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--smoke); line-height: 1.5;">Our systems are designed for execution. Zero friction. Zero ambiguity.</p>
+        </div>
+        <div class="stat-box">
+            <span class="t-label">Phoenix Capacity</span>
+            <div class="t-headline t-num">Limited</div>
+            <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--smoke); line-height: 1.5;">Currently accepting 3 new clients for the Q1 2026 cycle.</p>
+        </div>
+    </section>
+
+    <div class="spacer-10"></div>
+
+    <!-- PROTOCOL -->
+    <section id="architecture" class="wrapper">
+        <span class="t-label">The Architecture</span>
+        <h2 class="t-headline" style="margin-bottom: 6rem;">Systematic Reconstruction.</h2>
+        
+        <div class="timeline-row">
+            <span class="step-index">01</span>
+            <div>
+                <h3>Audit & Analysis</h3>
+                <p class="t-body" style="margin-top: 1.5rem;">
+                    We don't guess. We assess structural balance, metabolic baseline, and lifestyle constraints. The program is built around your reality, not a template.
+                </p>
+            </div>
+        </div>
+        <div class="timeline-row">
+            <span class="step-index">02</span>
+            <div>
+                <h3>Hypertrophy Architecture</h3>
+                <p class="t-body" style="margin-top: 1.5rem;">
+                    Volume is calibrated. Intensity is mandated. We focus on mechanical tension and progressive overload using a minimal-effective-dose philosophy.
+                </p>
+            </div>
+        </div>
+        <div class="timeline-row">
+            <span class="step-index">03</span>
+            <div>
+                <h3>Nutritional Precision</h3>
+                <p class="t-body" style="margin-top: 1.5rem;">
+                    Data-driven fueling. Whether you're dining in Biltmore or traveling for business, the macro-strategy adapts to maintain anabolic signaling.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="spacer-10"></div>
+
+    <!-- PRICING -->
+    <section id="roster" class="border-top border-bot">
+        <div class="row" style="width: 100%;">
+            <div class="col pricing-card">
+                <div>
+                    <span class="t-label">Option A</span>
+                    <h3 class="t-headline" style="margin-top: 1rem;">Essentials</h3>
+                    <ul>
+                        <li>Custom Programming Block</li>
+                        <li>Monthly Video Analysis</li>
+                        <li>Basic Macro Strategy</li>
+                        <li>48h Response Time</li>
+                    </ul>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <div class="t-headline t-num" style="font-size: 1.5rem;">$249/mo</div>
+                    <a href="#contact" class="btn-minimal" style="margin-top: 1rem;">Select</a>
+                </div>
+            </div>
+
+            <div class="col pricing-card" style="background: var(--concrete);">
+                <div>
+                    <span class="t-label" style="color: var(--signal);">Option B // Recommended</span>
+                    <h3 class="t-headline" style="margin-top: 1rem;">Performance</h3>
+                    <ul>
+                        <li>Weekly Progression Logic</li>
+                        <li>Advanced Nutrition Periodization</li>
+                        <li>24/7 Direct Access</li>
+                        <li>Technique Reconstruction</li>
+                    </ul>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <div class="t-headline t-num" style="font-size: 1.5rem;">$449/mo</div>
+                    <a href="#contact" class="btn-minimal" style="margin-top: 1rem;">Select</a>
+                </div>
+            </div>
+
+            <div class="col pricing-card">
+                <div>
+                    <span class="t-label">Option C</span>
+                    <h3 class="t-headline" style="margin-top: 1rem;">Executive</h3>
+                    <ul>
+                        <li>Concierge Management</li>
+                        <li>Daily Variable Adjustment</li>
+                        <li>Travel & Hotel Gym Strategy</li>
+                        <li>Supplement Stack Design</li>
+                        <li>In-Person (Arcadia/PV Only)</li>
+                    </ul>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <div class="t-headline t-num" style="font-size: 1.5rem;">$899/mo</div>
+                    <a href="#contact" class="btn-minimal" style="margin-top: 1rem;">Select</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="spacer-10"></div>
+
+    <!-- CONTACT -->
+    <section id="contact" class="wrapper">
+        <div class="row">
+            <div class="col" style="flex: 1;">
+                <span class="t-label">Inquiry</span>
+                <h2 class="t-headline">Request Access.</h2>
+                <p class="t-body" style="margin-top: 2rem;">
+                    We operate on a waitlist basis. Submit your metrics below to determine fit.
+                </p>
+                <div style="margin-top: 4rem;">
+                    <p class="t-label">Studio Location</p>
+                    <p class="t-body" style="color: var(--signal);">44th St & Camelback Rd<br>Phoenix, AZ 85018</p>
+                </div>
+            </div>
+            <div class="col" style="flex: 1.5; padding-top: 4rem;">
+                <form onsubmit="event.preventDefault(); alert('Request Submitted.');">
+                    <input type="text" class="input-line" placeholder="Name" required>
+                    <input type="email" class="input-line" placeholder="Email" required>
+                    <input type="text" class="input-line" placeholder="Primary Goal (e.g. Hypertrophy)" required>
+                    <button type="submit" class="btn-solid">
+                        <span>Submit Request</span>
+                        <span>&rarr;</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="spacer-20"></div>
+
+    <footer class="wrapper border-top" style="padding-top: 2rem; padding-bottom: 2rem; display: flex; justify-content: space-between;">
+        <span class="t-label">© 2026 Saguaro Ironline</span>
+        <span class="t-label">System Status: Optimal</span>
+    </footer>
+
+    <!-- MOBILE STICKY BAR -->
+    <div class="mobile-bar">
+        <span>PHX // 2026</span>
+        <a href="#contact" class="btn-action">Inquire</a>
+    </div>
+
+    <script>
+        // --- SCROLL OBSERVER ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
